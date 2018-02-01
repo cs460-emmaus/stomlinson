@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+
+
+   <!-- *************************************
+
+    Tomlinson_Arrays.html(c) 2018 by Sharon Tomlinson
+    stomlinson@emmaus.edu
+    Description:
+        Several Arrays completing different functions
+
+    Versions:
+        original 1/30/2018 using Chrome
+
+    ****************************************** -->
+
+
+<html>
+
+<body>
+
+<h2>Instructions</h2>
+
+Add or modify the existing code to produce the results described.
+
+
+
+<h2>JavaScript Arrays</h2>
+
+
+
+<p id="demo"></p>
+
+<p id="r1">r1</p>
+
+<p><input type='button' value='exercise 1' onclick='exercise1()'/></p>
+
+<p id="r2">r2</p>
+
+<p><input type='button' value='exercise 2' onclick='exercise2()'/></p>
+
+<p id="r3">r3</p>
+<p>
+    rows: <input type='text' id='rows' value='10'/>
+    columns: <input type='text' id='cols' value='12'/>
+    <button onclick='exercise3()'>exercise 3</button>
+    </p>
+
+<p id="r4">r4</p>
+<p><button onclick='exercise4()'>ExErCiSe 4</button></p>
+
+<p id="r5">r5</p>
+
+<p><button onclick='exercise5()'>exercise 5</button></p>
+<canvas id="gc" width="400" height="400"></canvas>
+    
+
+
+<script>
+
+// this example found in w3schools Arrays tutorial
+
+
+
+var cars = ["Saab", "Volvo", "BMW"];
+
+document.getElementById("demo").innerHTML = cars;
+
+
+
+function exercise1() {
+
+  // add “Ford" to the beginning, and “Chevrolet" to the end of the cars array
+    cars.unshift("Ford")
+    cars.push("Chevrolet")
+  // then display the contents of the array in the r1 element
+    document.getElementById("r1").innerHTML = cars
+}
+
+
+
+function exercise2(){
+
+  // modify the names of all the car types, adding the prefix 'make_' to each
+    for(var i=0; i<cars.length; i++) {
+        //add prefix if not already there
+        if(0 !== cars[i].search(" Make_ "))
+        cars[i] = " Make_ " + cars[i]
+        }
+  // then display the contents of the array in the r2 element
+    document.getElementById("r2").innerHTML = cars
+ // don't add the 'make_' prefix if it is already there
+
+}
+
+
+
+function exercise3(){
+
+  // create a 2d array with the number of rows and columns specified in the textboxes 'rows' and 'columns'
+    
+    //read rows, cols input
+    var rows = document.getElementById("rows").value
+    var cols = document.getElementById("cols").value
+    
+    var html = "Rows: " + rows + ", Cols: " + cols 
+
+    //creat the array
+    var a2d = [] // this is an array of rows (also arrays)
+    for(var r=0; r<rows; r++) {
+        a2d.push([])
+        //fill the row
+        for(var c=0; c<cols; c++) {
+            a2d[r].push(r + "," + c)
+            console.log(r + "," + c)
+        }
+    }
+    
+ // fill the array with the strings r,c where r and c match the row and column position
+    
+    //any element of the array:   a2d[r][c]
+    //tables in html:
+    //<table border = 1>
+    //<tr><td>0,0</td><td>...</></tr>
+    //<tr>....</tr>
+    //...
+    //</table>
+    //somewhere in the loop  html += ...
+    
+    html += "<table border=1>"
+    for(var r=0; r<rows; r++) {
+        html += "<tr>"
+        //column loop
+        for(var c=0; c<cols; c++) {
+            html += "<td>" + a2d[r][c] + "</td>"
+        }
+        html += "</tr>\n"
+    }
+    html += "</table>\n"
+    
+ // display the 2d array in a table 
+    document.getElementById("r3").innerHTML = html
+}
+//convert and return a string representation of n
+function toHex(n) {
+   var result = n.toString(16)  //converts decimal number n to hex value (string)
+   if(result.length == 1) result= "0" + result // pad leading zero
+}
+    
+    
+
+function exercise4(){
+
+  // fill a 2d array with random 'colors' that contain rgb values in a hexadecimal 'triplet'. For example, red
+     //read rows, cols input
+    var rows = document.getElementById("rows").value
+    var cols = document.getElementById("cols").value
+    
+    var html = "Rows: " + rows + ", Cols: " + cols 
+
+    //creat the array
+    var a2d = [] // this is an array of rows (also arrays)
+    for(var r=0; r<rows; r++) {
+        a2d.push([])
+        //fill the row
+        for(var c=0; c<cols; c++) {
+            
+            //fill with random rgb (hex format)
+            
+            //simpler v2: var red = toHex(Math.floor(Math.random() * 256))
+            var red = Number(Math.floor(Math.random() * 256)).toString(16)
+            var green = Number(Math.floor(Math.random() * 256)).toString(16)
+            var blue = Number(Math.floor(Math.random() * 256)).toString(16)
+
+            if (red.length == 1) red = "0" + red
+            if (green.length == 1) green = "0" + green
+            if (blue.length == 1) blue = "0" + blue
+            a2d[r].push(red + green + blue)
+        }
+    }
+    
+ // would have the value of ff0000, green 00ff00, blue 0000ff
+     html += "<table border=1>"
+    for(var r=0; r<rows; r++) {
+        html += "<tr>" //new row starting
+        //column loop
+        //color: should be like style='background-color:#123456;'
+        for(var c=0; c<cols; c++) {
+            html += "<td style='background-color:#"+ a2d[r][c] + ";'>" + a2d[r][c] + "</td>"
+        }
+        html += "</tr>\n"
+    }
+    html += "</table>\n"
+    
+ // display the 2d array in a table 
+    document.getElementById("r4").innerHTML = html
+
+}
+
+
+
+function exercise5(){
+
+// draw an array of squares with the colors that match the values in the array above
+    // see exercise 4 above
+    //read rows, cols input
+    var rows = document.getElementById("rows").value
+    var cols = document.getElementById("cols").value
+    
+    var html = "Rows: " + rows + ", Cols: " + cols 
+
+    //creat the array
+    var a2d = [] // this is an array of rows (also arrays)
+    for(var r=0; r<rows; r++) {
+        a2d.push([])
+        //fill the row
+        for(var c=0; c<cols; c++) {
+            
+            //fill with random rgb (hex format)
+            
+            //simpler v2: var red = toHex(Math.floor(Math.random() * 256))
+            var red = Number(Math.floor(Math.random() * 256)).toString(16)
+            var green = Number(Math.floor(Math.random() * 256)).toString(16)
+            var blue = Number(Math.floor(Math.random() * 256)).toString(16)
+
+            if (red.length == 1) red = "0" + red
+            if (green.length == 1) green = "0" + green
+            if (blue.length == 1) blue = "0" + blue
+            a2d[r].push(red + green + blue)
+        }
+    }
+    
+ // would have the value of ff0000, green 00ff00, blue 0000ff
+     html += "<table border=1>"
+    for(var r=0; r<rows; r++) {
+        html += "<tr>" //new row starting
+        //column loop
+        //color: should be like style='background-color:#123456;'
+        for(var c=0; c<cols; c++) {
+            html += "<td style='background-color:#"+ a2d[r][c] + ";'>" + a2d[r][c] + "</td>"
+        }
+        html += "</tr>\n"
+    }
+    html += "</table>\n"
+    
+ // display the 2d array in a table 
+    
+document.getElementById("r5").innerHTML = html
+    
+    //also draw thegrid
+    //handles need for graphics
+    canv=document.getElementById("gc");
+    ctx=canv.getContext("2d");
+    
+    //set color ctx.fillstyle="black";
+    //to draw rect: ctx.fillRect(0,0,canv.width,canv.height);
+    
+    //array: a2d, canv.width gives dimensions of target drawing reg.
+    
+    ch = canv.height / a2d.length //cell height
+    for( var r=0; r<a2d.length; r++ ) {
+        for( var c=0; c<a2d[r].length; c++ ) {
+            cw = canv.width / a2d[r].length
+            //draw the rectangle
+            ctx.fillStyle = '#' +a2d[r][c]
+            ctx.fillRect(c*cw,r*ch,cw,ch)
+        }
+    }
+    
+}
+
+
+
+
+</script>
+
+
+
+</body>
+
+</html>
